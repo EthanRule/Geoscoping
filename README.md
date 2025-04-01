@@ -1,5 +1,5 @@
 # Natural Disaster Tracker
-Worldwide natural disaster tracker. Allows people to view the current state of the world as a whole.
+Worldwide natural disaster tracker. Enables users to view the current state of the world as a whole.
 
 
 Why the name Geoscoping?
