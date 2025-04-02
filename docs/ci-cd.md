@@ -2,4 +2,6 @@
 
 ## Vercel
 
-Vercel automatically handles most of CI-CD.
+Vercel automatically handles most of CI-CD for the front end.
+
+Backend needs work.
