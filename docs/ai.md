@@ -4,8 +4,7 @@ This is an on going list of the best ways to utilize AI tools. Often over utiliz
 
 ## Useful Tools
 
-AI will make mistakes. AI cannot keep track of multiple files or current and planned architecture very well yet. Full reliance on AI creates tightly coupled
-non-extendable code.
+AI will make mistakes. AI cannot keep track of multiple files or current and planned architecture very well yet. Full reliance on AI creates tightly coupled non-extendable code.
 
 ### Searching
 
