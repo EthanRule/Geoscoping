@@ -17,7 +17,6 @@
 - Development through TDD (test driven development)
 - Object-oriented Backend
 - Postgresql
-- Admin Page
 - Protected Endpoints
 - gitignore environment variables
 
