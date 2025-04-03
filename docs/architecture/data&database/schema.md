@@ -204,6 +204,7 @@ INSERT INTO event_type (type_code, name, description, color_code) VALUES
 -- ('FLOOD', 'Flood', 'Water overflow from water bodies', '#1E90FF'),
 -- ('TSUNAMI', 'Tsunami', 'Series of ocean waves caused by an underwater disturbance', '#00BFFF'),
 -- ('LIGHTNING', 'Lightning', 'Electrical discharge during storms', '#FFFF00');
+-- (Droughts?)
 ```
 
 ## Design Considerations
