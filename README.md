@@ -1,6 +1,7 @@
 # Natural Disaster Tracker
 
 Worldwide natural disaster tracker. Enables users to view the world's geographical events.
+https://www.geoscoping.com/
 
 ## Why the name Geoscoping?
 

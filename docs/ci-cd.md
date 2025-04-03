@@ -2,6 +2,8 @@
 
 ## Vercel
 
-Vercel automatically handles most of CI-CD for the front end.
+Frontend: Vercel automatically handles most of CI-CD for the front end.
 
-Backend needs work.
+Backend: Hosted on azure. CI-CD Needs to be setup with github actions.
+
+Database: Hosted on azure? TBD
