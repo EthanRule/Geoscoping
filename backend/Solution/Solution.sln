@@ -1,10 +1,31 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoscopingEngine", "GeoscopingEngine\GeoscopingEngine.csproj", "{5896E36B-AB6F-40BC-849A-ED148B42DC53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoscopingEngineTests", "GeoscopingEngineTests\GeoscopingEngineTests.csproj", "{5303777F-A7AA-4AAB-9C9E-EDC2C44D9538}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5896E36B-AB6F-40BC-849A-ED148B42DC53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5896E36B-AB6F-40BC-849A-ED148B42DC53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5896E36B-AB6F-40BC-849A-ED148B42DC53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5896E36B-AB6F-40BC-849A-ED148B42DC53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5303777F-A7AA-4AAB-9C9E-EDC2C44D9538}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5303777F-A7AA-4AAB-9C9E-EDC2C44D9538}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5303777F-A7AA-4AAB-9C9E-EDC2C44D9538}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5303777F-A7AA-4AAB-9C9E-EDC2C44D9538}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {81318400-3D6E-41C2-A179-EA4C3E9DC06A}
 	EndGlobalSection
 EndGlobal
