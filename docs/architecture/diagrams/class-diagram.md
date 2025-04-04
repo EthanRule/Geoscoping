@@ -186,6 +186,34 @@ classDiagram
     EventRepository ..> Event
     RegionRepository ..> Region
     SourceRepository ..> Source
+
+    %% Implementation Status Styling - Using only border colors with transparent fill
+    style Event fill:transparent,stroke:#FFD700,stroke-width:3px %% In Progress - Gold/Orange border
+    style VolcanoEvent fill:transparent,stroke:#FFD700,stroke-width:3px %% In Progress - Gold/Orange border
+    style EarthquakeEvent fill:transparent,stroke:#FFD700,stroke-width:3px %% In Progress - Gold/Orange border
+    style WildfireEvent fill:transparent,stroke:#FFD700,stroke-width:3px %% In Progress - Gold/Orange border
+
+    style EventType fill:transparent,stroke:#FF6347,stroke-width:3px %% Not Started - Tomato Red border
+    style EventFactory fill:transparent,stroke:#FF6347,stroke-width:3px %% Not Started
+    style Region fill:transparent,stroke:#FF6347,stroke-width:3px %% Not Started
+    style Source fill:transparent,stroke:#FF6347,stroke-width:3px %% Not Started
+    style EventService fill:transparent,stroke:#FF6347,stroke-width:3px %% Not Started
+    style MapService fill:transparent,stroke:#FF6347,stroke-width:3px %% Not Started
+    style APIController fill:transparent,stroke:#FF6347,stroke-width:3px %% Not Started
+    style EventController fill:transparent,stroke:#FF6347,stroke-width:3px %% Not Started
+    style MapController fill:transparent,stroke:#FF6347,stroke-width:3px %% Not Started
+    style EventRepository fill:transparent,stroke:#FF6347,stroke-width:3px %% Not Started
+    style RegionRepository fill:transparent,stroke:#FF6347,stroke-width:3px %% Not Started
+    style SourceRepository fill:transparent,stroke:#FF6347,stroke-width:3px %% Not Started
+
+    %% Add a Legend class
+    class Legend {
+        <<Implementation Status>>
+        Completed (Green Border)
+        In Progress (Yellow Border)
+        Not Started (Red Border)
+    }
+    style Legend fill:transparent,stroke-dasharray:5 5
 ```
 
 ## Class Diagram Description
@@ -260,5 +288,15 @@ The Event Factory pattern provides several advantages:
 2. **Centralized Creation**: Single point for creating different event types
 3. **Extensibility**: New event types can be added by updating the factory without changing client code
 4. **Simplified Client Code**: Services just request an event of a certain type without needing to know creation details
+
+### Implementation Status
+
+The class diagram uses color coding to indicate the implementation status of each class:
+
+- **Green**: Completed classes
+- **Orange**: Classes in progress (Event, VolcanoEvent, EarthquakeEvent, WildfireEvent)
+- **Red**: Classes not yet started
+
+This visual indication helps track the development progress of the system components.
 
 This class structure supports the requirements for displaying geological events on an interactive map with the ability to filter, sort, and view detailed information about events and their sources.
