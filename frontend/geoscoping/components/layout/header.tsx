@@ -133,30 +133,6 @@ export default function Header() {
           <ul className="flex flex-col space-y-4 pb-4">
             <li>
               <Link
-                href="/events"
-                className={`block py-2 transition-colors ${
-                  pathname === "/events"
-                    ? "text-[#9EA677] font-medium border-l-4 pl-2 border-[#9EA677]"
-                    : "hover:text-[#9EA677]"
-                }`}
-              >
-                Events
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/about"
-                className={`block py-2 transition-colors ${
-                  pathname === "/about"
-                    ? "text-[#9EA677] font-medium border-l-4 pl-2 border-[#9EA677]"
-                    : "hover:text-[#9EA677]"
-                }`}
-              >
-                About
-              </Link>
-            </li>
-            <li>
-              <Link
                 href="/data"
                 className={`block py-2 transition-colors ${
                   pathname === "/data"
@@ -169,6 +145,18 @@ export default function Header() {
             </li>
             <li>
               <Link
+                href="/events"
+                className={`block py-2 transition-colors ${
+                  pathname === "/events"
+                    ? "text-[#9EA677] font-medium border-l-4 pl-2 border-[#9EA677]"
+                    : "hover:text-[#9EA677]"
+                }`}
+              >
+                Events
+              </Link>
+            </li>
+            <li>
+              <Link
                 href="/regions"
                 className={`block py-2 transition-colors ${
                   pathname === "/regions"
@@ -177,6 +165,18 @@ export default function Header() {
                 }`}
               >
                 Regions
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/about"
+                className={`block py-2 transition-colors ${
+                  pathname === "/about"
+                    ? "text-[#9EA677] font-medium border-l-4 pl-2 border-[#9EA677]"
+                    : "hover:text-[#9EA677]"
+                }`}
+              >
+                About
               </Link>
             </li>
           </ul>
