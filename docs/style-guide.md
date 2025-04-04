@@ -15,11 +15,11 @@
 
 ### Color Pallet (Hex)
 
-050505 - Black
-1C448E - Marian Blue
-FEFFFE - White
-9EA677 - Moss Green
-693A12 - Sepia
+[#050505] - Black
+[#1C448E] - Marian Blue
+[#FEFFFE] - White
+[#9EA677] - Moss Green
+[#693A12] - Sepia
 
 #### Color Blindness
 
