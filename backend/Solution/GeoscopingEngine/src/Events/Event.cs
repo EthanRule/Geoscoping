@@ -7,9 +7,9 @@
 namespace GeoscopingEngine.Src.Events
 {
     /// <summary>
-    /// Event base class.
+    /// Event base class. Making this class internal would be ideal, but for testing purposes it needs to be public.
     /// </summary>
-    internal abstract class Event
+    public abstract class Event
     {
         private long id = -1; // Default value to indicate an uninitialized state.
         private string name = string.Empty;
@@ -19,6 +19,28 @@ namespace GeoscopingEngine.Src.Events
         private string description = string.Empty;
         private DateTime createdAt;
         private DateTime updatedAt;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Event"/> class.
+        /// </summary>
+        /// <param name="name">The name of the event.</param>
+        /// <param name="description">The description of the event.</param>
+        /// <param name="startDate">The start date/time of the event.</param>
+        /// <param name="endDate">The end date/time of the event.</param>
+        /// <param name="severity">The severity level of the event (higher values indicate greater severity).</param>
+        protected Event(string name, string description, DateTime startDate, DateTime endDate, int severity)
+        {
+            this.name = name;
+            this.description = description;
+            this.startDate = startDate;
+            this.endDate = endDate;
+            this.severity = severity;
+
+            // Set creation/update timestamps to current time
+            DateTime now = DateTime.UtcNow;
+            this.createdAt = now;
+            this.updatedAt = now;
+        }
 
         /// <summary>
         /// Gets or sets the unique id for the event.
