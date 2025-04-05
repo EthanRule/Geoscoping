@@ -1,6 +1,6 @@
 ## Activity Diagram
 
-Flow of operations or actions within a particular function or process. Including actions like user inputs, data processing, decision-making, loops, and end states.
+Flow of operations or actions within the Geoscoping system, showing how users interact with the application and how the system processes these interactions.
 
 #### Install `bierner.markdown-mermaid` extension from VS Code to view the graph.
 
@@ -10,142 +10,152 @@ Open with: `Ctrl+Shift+V`
 stateDiagram-v2
     [*] --> AccessWebsite
 
-    state "User Interaction" as UserInteraction {
-        AccessWebsite --> ViewWorldMap
-        AccessWebsite --> ViewEventsTable
+    state "Client Layer" as ClientLayer {
+        state "User Interaction" as UserInteraction {
+            AccessWebsite --> ViewWorldMap
+            AccessWebsite --> ViewEventsTable
 
-        ViewWorldMap --> ZoomMap
-        ViewWorldMap --> ExamineRegion
+            state "Map Interaction" as MapInteraction {
+                ViewWorldMap --> ZoomMap
+                ViewWorldMap --> ExamineEvent
+                ExamineEvent --> SelectEvent
+                ZoomMap --> ViewWorldMap: Client-side only
+            }
 
-        ViewEventsTable --> SortEvents
-        ViewEventsTable --> FilterEvents
+            state "Table Interaction" as TableInteraction {
+                ViewEventsTable --> SortEvents
+                ViewEventsTable --> FilterEvents
+            }
 
-        ExamineRegion --> SelectRegion
-        SelectRegion --> ViewRegionEvents
+            SelectEvent --> ViewEventDetails
+            FilterEvents --> ViewEventDetails
+            SortEvents --> FilterEvents
 
-        SortEvents --> FilterEvents
-        FilterEvents --> ViewEventDetails
-        ViewRegionEvents --> ViewEventDetails
-
-        ViewEventDetails --> CheckSources
-    }
-
-    state "System Processing" as SystemProcessing {
-        state "Load Map Data" as LoadMapData {
-            InitializeMap --> LoadGeographicData
-            LoadGeographicData --> RenderMap
+            ViewEventDetails --> CheckSources
         }
 
-        state "Load Event Data" as LoadEventData {
+        state "Client-Side Map Processing" as ClientMapProcessing {
+            RenderClientMap --> HandleZoom
+            RenderClientMap --> HandlePan
+            RenderClientMap --> HighlightEvent
+            HighlightEvent --> DisplayEventInfo
+        }
+    }
+
+    state "Server Layer" as ServerLayer {
+        state "API Processing" as APIProcessing {
+            ReceiveRequest --> RouteToService
+            RouteToService --> ProcessResponse
+        }
+
+        state "Event Service" as EventService {
             FetchEvents --> ProcessEventData
-            ProcessEventData --> PopulateTable
-            ProcessEventData --> HighlightRegions
-        }
-
-        state "Region Selection Processing" as RegionSelectionProcessing {
-            IdentifyRegion --> QueryRelatedEvents
-            QueryRelatedEvents --> DisplayRegionEvents
-        }
-
-        state "Event Detail Processing" as EventDetailProcessing {
-            GetEventInfo --> FormatEventData
-            FormatEventData --> DisplayEventDetails
-            DisplayEventDetails --> LoadSources
+            ProcessEventData --> PrepareEventDisplay
+            GetEventDetails --> FormatEventData
+            GetRegionEvents --> FormatRegionEvents
         }
     }
 
-    AccessWebsite --> InitializeMap
-    InitializeMap --> FetchEvents
+    state "Data Layer" as DataLayer {
+        QueryDatabase --> RetrieveEventData
+        QueryDatabase --> RetrieveGeographicData
+        QueryDatabase --> RetrieveSources
+    }
 
-    ViewWorldMap --> RenderMap
-    ZoomMap --> RenderMap
+    % Client to Server transitions (removed direct map service calls)
+    AccessWebsite --> ReceiveRequest
+    SelectEvent --> GetEventDetails
+    ViewEventsTable --> FetchEvents
 
-    ExamineRegion --> HighlightRegions
-    SelectRegion --> IdentifyRegion
+    % Client to client-side map transitions
+    ViewWorldMap --> RenderClientMap
+    ZoomMap --> HandleZoom
+    ExamineEvent --> HighlightEvent
 
-    ViewEventsTable --> PopulateTable
-    SortEvents --> PopulateTable
-    FilterEvents --> PopulateTable
+    % Server internal transitions
+    RouteToService --> FetchEvents
+    RouteToService --> GetEventDetails
 
-    ViewRegionEvents --> DisplayRegionEvents
+    EventService --> QueryDatabase
 
-    ViewEventDetails --> GetEventInfo
-    CheckSources --> LoadSources
+    % Server to Client transitions
+    PrepareEventDisplay --> ViewEventsTable
+    FormatEventData --> ViewEventDetails
+    FormatRegionEvents --> ViewRegionEvents
+    RetrieveSources --> CheckSources
 
-    RenderMap --> [*]
-    PopulateTable --> [*]
-    DisplayRegionEvents --> [*]
-    DisplayEventDetails --> [*]
-    LoadSources --> [*]
+    % Terminal states
+    ProcessResponse --> [*]
 
-    note right of UserInteraction
-        Actions initiated by users interacting
-        with the Geoscoping application
+    note right of ClientLayer
+        Map interactions focus on events rather than regions,
+        allowing users to directly interact with event markers
     end note
 
-    note right of SystemProcessing
-        Backend processes that handle
-        data retrieval and processing
+    note right of ClientMapProcessing
+        Client-side map operations highlight events when
+        users hover over them and display event data on click
+    end note
+
+    note right of ServerLayer
+        Server only processes data requests,
+        not UI interactions
+    end note
+
+    note right of DataLayer
+        Interactions with the Data Layer from
+        the Application Diagram
     end note
 ```
 
 ### Activity Flow Description
 
-This activity diagram illustrates the flow of operations in the Geoscoping system, particularly focusing on how geological event data is processed and presented to users.
+This activity diagram illustrates the flow of operations in the Geoscoping system, showing how users interact with the application and how the system processes these interactions.
 
-#### User Interaction Flow
+#### Client Layer Activities
 
-1. **Access Website**
+1. **Initial Access**
 
-   - User navigates to the Geoscoping.com website
+   - User navigates to the Geoscoping website
+   - Can choose to view the world map or events table
 
-2. **View Options**
+2. **Map Interaction (Client-Side Only)**
 
-   - User can choose to start by viewing the world map or events table
+   - User views the interactive global map rendered entirely client-side
+   - Can zoom in/out to focus on specific areas without server requests
+   - Can pan and navigate the map without server requests
+   - Can examine events by hovering over event markers on the map
+   - Can select events to retrieve detailed information (triggers server request only for data)
 
-3. **Map Interaction**
+3. **Table Interaction**
 
-   - **View World Map**: User views the interactive global map
-   - **Zoom Map**: User can zoom in/out to focus on different areas
-   - **Examine Region**: User can hover over shaded regions to see basic information
-   - **Select Region**: User clicks on a region of interest
+   - User views tabular data of geological events
+   - Can sort events by various criteria
+   - Can filter events based on specific parameters
 
-4. **Table Interaction**
+4. **Detailed Information**
+   - User can view comprehensive details about specific events by clicking them on the map
+   - Can review information sources for each event
 
-   - **View Events Table**: User accesses tabular data of all geological events
-   - **Sort Events**: User sorts data by severity, casualties, region, or time frame
-   - **Filter Events**: User narrows down events based on criteria
+#### Server Layer Activities
 
-5. **Detailed Information**
-   - **View Region Events**: User sees events specific to a selected map region
-   - **View Event Details**: User accesses comprehensive event information
-   - **Check Sources**: User reviews sources of the event information
+1. **API Processing**
 
-#### System Processing Flow
+   - Receives data requests from the client (not UI interaction requests)
+   - Routes requests to appropriate services
+   - Processes and formats responses
 
-1. **Map Data Processing**
+2. **Event Service**
+   - Fetches event data based on requests
+   - Retrieves events associated with selected regions
+   - Processes event data for display
+   - Retrieves detailed information for specific events
+   - Formats event data for client display
 
-   - **Initialize Map**: System begins loading the interactive map
-   - **Load Geographic Data**: System retrieves geographical information
-   - **Render Map**: System displays the interactive map with shaded regions
+#### Data Layer Activities
 
-2. **Event Data Processing**
+- Queries the database for required information
+- Retrieves event data, geographic data, and source information
+- Provides data to services for processing
 
-   - **Fetch Events**: System retrieves geological event data from the database
-   - **Process Event Data**: System organizes and prepares event information
-   - **Populate Table**: System fills the events table with data
-   - **Highlight Regions**: System shades regions on the map based on events
-
-3. **Region Selection Processing**
-
-   - **Identify Region**: System determines which region was selected
-   - **Query Related Events**: System finds events associated with the region
-   - **Display Region Events**: System shows events specific to that region
-
-4. **Event Detail Processing**
-   - **Get Event Info**: System retrieves comprehensive data for a specific event
-   - **Format Event Data**: System prepares the data for presentation
-   - **Display Event Details**: System shows detailed event information
-   - **Load Sources**: System retrieves and displays information sources
-
-This diagram captures both the user-facing actions and the underlying system processes that occur when users interact with the Geoscoping application to explore geological events.
+This updated diagram removes direct interactions between map UI operations and the server, keeping all map rendering and navigation on the client side. Server requests are only made when actual data needs to be fetched, such as retrieving event details or region-specific information.

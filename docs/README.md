@@ -7,5 +7,5 @@ This directory holds all forms of documentation used in the creation and mainten
 **3. versioning.md**  
 **4. process-model.md**  
 **5. ci-cd.md**  
-**6. style-guide.md**
+**6. style-guide.md**  
 **7. ai.md**

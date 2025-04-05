@@ -1,14 +1,6 @@
 # AI
 
-This is an on going list of the best ways to utilize AI tools. Often over utilization of these tools in the wrong areas causes more harm than good.
-
-## Useful Tools
-
-AI will make mistakes. AI cannot keep track of multiple files or current and planned architecture very well yet. Full reliance on AI creates tightly coupled non-extendable code.
-
-### Searching
-
-> - Chatgpt.com
+This is an on going list of the best ways to utilize AI tools. Often over utilization of these tools in the wrong areas causes more harm than good. AI will make mistakes. AI cannot keep track of multiple files or current and planned architecture very well yet. Full reliance on AI creates tightly coupled non-extendable code. Use with great caution.
 
 ### Syntax
 
