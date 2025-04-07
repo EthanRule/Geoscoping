@@ -92,7 +92,6 @@
             throw new NotSupportedException($"Unsupported API path: {path}");
         }
 
-
         /// <summary>
         /// Routes requests to the EventController based on the HTTP method and path.
         /// </summary>
@@ -108,7 +107,8 @@
             {
                 // Extract query parameters
                 var queryParams = request.Query;
-                //return eventController.GetEvents(queryParams);
+
+                // return await eventController.GetEvents(queryParams);
             }
             else if (path.Contains("/api/events/") && method == "GET")
             {
@@ -116,7 +116,7 @@
                 string idStr = path.Split("/").Last();
                 if (int.TryParse(idStr, out int id))
                 {
-                    //return eventController.GetEventDetails(id);
+                    // return await eventController.GetEventDetails(id);
                 }
             }
 
