@@ -33,6 +33,5 @@
 
 > https://my.brain.fm/
 
-- No Scroll
 - Mobile First
 - Critical Buttons / Features Only.
