@@ -207,22 +207,29 @@ export default function Table() {
   };
 
   return (
-    <div className="px-4 w-full mx-auto">
+    <div className="w-full mx-auto">
       <div className="rounded-lg overflow-hidden">
-        <div className="bg-gray-800/30 text-gray-300 py-2 px-6 rounded-lg mb-2">
+        <div className="bg-gray-800/30 text-gray-300 py-2 px-6 rounded-lg">
           <div className="grid grid-cols-12 gap-3">
-            <div className="col-span-1 flex items-center font-medium">Type</div>
-            <div className="col-span-2 flex items-center font-medium">Name</div>
-            <div className="col-span-3 flex items-center font-medium">
+            <div className="col-span-2 xl:col-span-1 flex items-center font-medium">
+              Type
+            </div>
+            <div className="hidden xl:flex xl:col-span-2 items-center font-medium">
+              Name
+            </div>
+            <div className="col-span-7 xl:col-span-3 flex items-center font-medium">
               Location
             </div>
-            <div className="col-span-2 flex items-center font-medium">Date</div>
-            <div className="col-span-2 flex items-center font-medium">
+            <div className="hidden xl:flex xl:col-span-2 items-center font-medium">
+              Date
+            </div>
+            <div className="col-span-3 xl:col-span-2 flex items-center font-medium">
               Severity
             </div>
-            <div className="col-span-1 flex items-center font-medium">
+            <div className="hidden xl:flex xl:col-span-1 items-center font-medium">
               Status
             </div>
+            <div className="xl:col-span-1"></div>
           </div>
         </div>
 
@@ -230,21 +237,21 @@ export default function Table() {
           {currentEvents.map((event) => (
             <div key={event.id} className="mb-2">
               <div className="grid grid-cols-12 gap-3 px-6 py-2 bg-[#050505] text-white border border-gray-700 rounded-lg shadow-sm hover:bg-gray-900 transition-all">
-                <div className="col-span-1 flex items-center">
+                <div className="col-span-2 xl:col-span-1 flex items-center">
                   <span className="text-xl" title={event.type}>
                     {getEventIcon(event.type)}
                   </span>
                 </div>
-                <div className="col-span-2 font-medium flex items-center">
+                <div className="hidden xl:flex xl:col-span-2 font-medium items-center">
                   {event.name}
                 </div>
-                <div className="col-span-3 text-gray-300 flex items-center">
+                <div className="col-span-7 xl:col-span-3 text-gray-300 flex items-center">
                   {event.location}
                 </div>
-                <div className="col-span-2 text-gray-300 flex items-center">
+                <div className="hidden xl:flex xl:col-span-2 text-gray-300 items-center">
                   {event.date}
                 </div>
-                <div className="col-span-2 flex items-center">
+                <div className="col-span-3 xl:col-span-2 flex items-center">
                   <div className="flex items-center">
                     <span
                       className={`${getSeverityColor(
@@ -255,7 +262,7 @@ export default function Table() {
                     <span>{event.severity}/10</span>
                   </div>
                 </div>
-                <div className="col-span-1 flex items-center">
+                <div className="hidden xl:flex xl:col-span-1 items-center">
                   <span
                     className={`${getStatusBadge(
                       event.status
@@ -264,7 +271,7 @@ export default function Table() {
                     {event.status}
                   </span>
                 </div>
-                <div className="col-span-1 flex items-center justify-end">
+                <div className="col-span-1 xl:col-span-1 flex items-center justify-end">
                   {event.info ? (
                     <button
                       onClick={() => toggleRowExpand(event.id)}
@@ -327,7 +334,7 @@ export default function Table() {
 
               {/* Expanded info section - updated to use renderEventDetails */}
               {isRowExpanded(event.id) && (
-                <div className="px-6 py-3 mt-1 bg-gray-900 border border-gray-700 rounded-lg text-gray-300">
+                <div className="px-6 py-3 mt-2 bg-gray-900 border border-gray-700 rounded-lg text-gray-300">
                   {renderEventDetails(event)}
                 </div>
               )}
