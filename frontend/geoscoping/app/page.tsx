@@ -6,10 +6,10 @@ import Table from "@/components/table/table";
 export default function Home() {
   return (
     <div>
-      <div className="w-1/2">
+      <div className="xl:w-1/2">
         <Map />
       </div>
-      <div className="py-20">
+      <div className="py-5">
         <Table />
       </div>
     </div>
