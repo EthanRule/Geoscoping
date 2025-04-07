@@ -26,3 +26,13 @@
 - Moss Green and Sepia have contrasting shades of brightness for Red Green color blindness (8% men).
 
 ### Fonts
+
+## UX Design
+
+### Inspiration
+
+> https://my.brain.fm/
+
+- No Scroll
+- Mobile First
+- Critical Buttons / Features Only.
