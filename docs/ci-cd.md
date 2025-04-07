@@ -2,8 +2,8 @@
 
 ## Vercel
 
-Frontend: Vercel automatically handles most of CI-CD for the front end.
+Frontend: Vercel automatically handles most of CI-CD for the front end. (Vercel Pro Tier)
 
-Backend: Hosted on azure. CI-CD Needs to be setup with github actions.
+Backend: Azure. (Free Tier)
 
-Database: Hosted on azure? TBD
+Database: Neon Postgresql Hosted on Vercel. (Free Tier)
