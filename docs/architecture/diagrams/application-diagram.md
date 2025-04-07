@@ -16,8 +16,6 @@ flowchart TD
         subgraph FrontendComponents["Frontend Components"]
             WorldMap["Inter active World Map"]
             EventTable["EventsTable"]
-            RegionDetails["Region Details View"]
-            SourceInfo["Information Sources Display"]
         end
 
         FrontEnd --> FrontendComponents
@@ -25,14 +23,12 @@ flowchart TD
 
     subgraph Server["Server Layer"]
         API["API Gateway"]
-        AuthService["Authentication/Authorization Service"]
 
         subgraph Services["Business Services"]
             EventService["Event Service"]
             MapService["Map Service"]
         end
 
-        API --> AuthService
         API --> Services
     end
 
