@@ -9,7 +9,6 @@
     public class APIController
     {
         private readonly EventController eventController;
-        private readonly MapController mapController;
         private readonly ILogger<APIController> logger;
 
         /// <summary>
@@ -21,11 +20,9 @@
         /// <exception cref="ArgumentNullException">Exception throwing.</exception>
         public APIController(
             EventController eventController,
-            MapController mapController,
             ILogger<APIController> logger)
         {
             this.eventController = eventController ?? throw new ArgumentNullException(nameof(eventController));
-            this.mapController = mapController ?? throw new ArgumentNullException(nameof(mapController));
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
