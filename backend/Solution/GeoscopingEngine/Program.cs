@@ -1,9 +1,29 @@
+using GeoscopingEngine.Src;
+using GeoscopingEngine.Src.Events;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Register application services. Singleton (Shared), Scoped (Per request), Transient (New instance each time).
+builder.Services.AddHttpClient();
+//builder.Services.AddSingleton<EventRepository>();
+//builder.Services.AddScoped<EventFactory>();
+//builder.Services.AddTransient<APIController>();
+
+// Add CORS policy for Next.js frontend
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowNextJsApp", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000") // Next.js development URL // TODO: Change to production URL
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowCredentials();
+    });
+});
 
 var app = builder.Build();
 
@@ -15,6 +35,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Enable CORS
+app.UseCors("AllowNextJsApp");
 
 app.UseAuthorization();
 
