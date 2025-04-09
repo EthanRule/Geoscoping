@@ -8,7 +8,7 @@
     using System.Collections.Generic;
 
     /// <summary>
-    /// Primary class for fetching data from third party APIs.
+    /// Primary class for fetching data from third party APIs and the Database.
     /// </summary>
     public class EventRepository
     {
