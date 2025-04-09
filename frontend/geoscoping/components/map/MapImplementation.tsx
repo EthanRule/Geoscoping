@@ -22,8 +22,8 @@ export default function MapImplementation() {
             onClick={() => setViewType("map")}
             className={`px-4 py-2 text-sm font-medium border rounded-l-lg ${
               viewType === "map"
-                ? "bg-[#8B4513] text-white border-[#693A12]"
-                : "bg-white text-[#693A12] border-gray-300 hover:bg-gray-100"
+                ? "bg-[#693A12] text-[#FEFFFE] border-[#693A12]"
+                : "bg-[#FEFFFE] text-[#693A12] border-[#9EA677] hover:bg-[#9EA677] hover:text-[#FEFFFE] hover:opacity-80"
             }`}
           >
             2D Map
@@ -33,8 +33,8 @@ export default function MapImplementation() {
             onClick={() => setViewType("globe")}
             className={`px-4 py-2 text-sm font-medium border rounded-r-lg ${
               viewType === "globe"
-                ? "bg-[#8B4513] text-white border-[#693A12]"
-                : "bg-white text-[#693A12] border-gray-300 hover:bg-gray-100"
+                ? "bg-[#693A12] text-[#FEFFFE] border-[#693A12]"
+                : "bg-[#FEFFFE] text-[#693A12] border-[#9EA677] hover:bg-[#9EA677] hover:text-[#FEFFFE] hover:opacity-80"
             }`}
           >
             3D Globe
