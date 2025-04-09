@@ -48,18 +48,6 @@ export default function Header() {
           <ul className="flex space-x-6">
             <li>
               <Link
-                href="/data"
-                className={`transition-colors ${
-                  pathname === "/data"
-                    ? "text-[#9EA677] font-medium border-b-2 border-[#9EA677]"
-                    : "hover:text-[#9EA677]"
-                }`}
-              >
-                Data
-              </Link>
-            </li>
-            <li>
-              <Link
                 href="/events"
                 className={`transition-colors ${
                   pathname === "/events"
@@ -72,14 +60,14 @@ export default function Header() {
             </li>
             <li>
               <Link
-                href="/regions"
+                href="/data"
                 className={`transition-colors ${
-                  pathname === "/regions"
+                  pathname === "/data"
                     ? "text-[#9EA677] font-medium border-b-2 border-[#9EA677]"
                     : "hover:text-[#9EA677]"
                 }`}
               >
-                Regions
+                Data
               </Link>
             </li>
             <li>
@@ -133,18 +121,6 @@ export default function Header() {
           <ul className="flex flex-col space-y-4 pb-4">
             <li>
               <Link
-                href="/data"
-                className={`block py-2 transition-colors ${
-                  pathname === "/data"
-                    ? "text-[#9EA677] font-medium border-l-4 pl-2 border-[#9EA677]"
-                    : "hover:text-[#9EA677]"
-                }`}
-              >
-                Data
-              </Link>
-            </li>
-            <li>
-              <Link
                 href="/events"
                 className={`block py-2 transition-colors ${
                   pathname === "/events"
@@ -157,14 +133,14 @@ export default function Header() {
             </li>
             <li>
               <Link
-                href="/regions"
+                href="/data"
                 className={`block py-2 transition-colors ${
-                  pathname === "/regions"
+                  pathname === "/data"
                     ? "text-[#9EA677] font-medium border-l-4 pl-2 border-[#9EA677]"
                     : "hover:text-[#9EA677]"
                 }`}
               >
-                Regions
+                Data
               </Link>
             </li>
             <li>

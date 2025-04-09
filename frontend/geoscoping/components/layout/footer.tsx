@@ -131,17 +131,6 @@ export default function Footer() {
             <ul className="space-y-3 text-[#FEFFFE]/80 text-sm">
               <li>
                 <Link
-                  href="/data"
-                  className="group hover:text-[#9EA677] transition-colors hover:pl-1 duration-200 flex items-center"
-                >
-                  <span className="opacity-0 group-hover:opacity-100 mr-1 transition-opacity">
-                    ›
-                  </span>{" "}
-                  Data
-                </Link>
-              </li>
-              <li>
-                <Link
                   href="/events"
                   className="group hover:text-[#9EA677] transition-colors hover:pl-1 duration-200 flex items-center"
                 >
@@ -153,13 +142,13 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/regions"
+                  href="/data"
                   className="group hover:text-[#9EA677] transition-colors hover:pl-1 duration-200 flex items-center"
                 >
                   <span className="opacity-0 group-hover:opacity-100 mr-1 transition-opacity">
                     ›
                   </span>{" "}
-                  Regions
+                  Data
                 </Link>
               </li>
               <li>
