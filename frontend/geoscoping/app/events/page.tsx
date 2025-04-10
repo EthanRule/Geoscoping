@@ -1,14 +1,8 @@
+import Image from "next/image";
 export default async function Events() {
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">
-        Natural Event Types ( VIBE CODED DRAFT)
-      </h1>
-      <p className="mb-8">
-        Geoscoping tracks various geological events around the world. Each event
-        type has specific metrics associated with it that contribute to its
-        overall severity rating.
-      </p>
+      <h1 className="text-3xl font-bold mb-6">Natural Event Types</h1>
 
       {/* Earthquake Section */}
       <div className="bg-[#050505] border border-[#1C448E] rounded-lg shadow-md p-6 mb-8">
@@ -74,17 +68,13 @@ export default async function Events() {
 
           <div className="flex flex-col justify-between">
             <div className="relative h-[300px] sm:h-[400px] md:h-[500px] rounded-lg overflow-hidden mb-4">
-              <img
-                src="https://earthquake.usgs.gov/static/earthquake-website/photos/movie.20130425.ci15481673/ci15481673.jpeg"
+              <Image
+                src="/images/earthquake.png"
                 alt="Earthquake damage"
-                className="absolute inset-0 w-full h-full object-cover"
+                fill
+                className="object-cover"
               />
-              <div className="absolute inset-0 bg-[#050505]/40 flex items-end p-4">
-                <p className="text-sm text-[#FEFFFE]">
-                  Damage from a magnitude 7.1 earthquake. This could be replaced
-                  with real-time imagery.
-                </p>
-              </div>
+              <div className="absolute inset-0 bg-[#050505]/40 flex items-end p-4"></div>
             </div>
           </div>
         </div>
@@ -161,17 +151,13 @@ export default async function Events() {
 
           <div className="flex flex-col justify-between">
             <div className="relative h-[300px] sm:h-[400px] md:h-[500px] rounded-lg overflow-hidden mb-4">
-              <img
-                src="https://volcanoes.usgs.gov/vsc/images/image_mngr/3200-3299/img3202_large.jpg"
-                alt="Volcanic eruption"
-                className="absolute inset-0 w-full h-full object-cover"
+              <Image
+                src="/images/volcano.png"
+                alt="Earthquake damage"
+                fill
+                className="object-cover"
               />
-              <div className="absolute inset-0 bg-[#050505]/40 flex items-end p-4">
-                <p className="text-sm text-[#FEFFFE]">
-                  Volcanic eruption with ash plume. Real-time footage could be
-                  shown here during active events.
-                </p>
-              </div>
+              <div className="absolute inset-0 bg-[#050505]/40 flex items-end p-4"></div>
             </div>
           </div>
         </div>
@@ -243,17 +229,13 @@ export default async function Events() {
 
           <div className="flex flex-col justify-between">
             <div className="relative h-[300px] sm:h-[400px] md:h-[500px] rounded-lg overflow-hidden mb-4">
-              <img
-                src="https://www.fireweatheravalanche.org/archive/2022/images/fires/Hermits%20Peak%20Fire_4_26_22_1920.jpg"
-                alt="Wildfire"
-                className="absolute inset-0 w-full h-full object-cover"
+              <Image
+                src="/images/wildfire.png"
+                alt="Earthquake damage"
+                fill
+                className="object-cover"
               />
-              <div className="absolute inset-0 bg-[#050505]/40 flex items-end p-4">
-                <p className="text-sm text-[#FEFFFE]">
-                  Active wildfire consuming forest. Live satellite imagery could
-                  be displayed here for current events.
-                </p>
-              </div>
+              <div className="absolute inset-0 bg-[#050505]/40 flex items-end p-4"></div>
             </div>
           </div>
         </div>
