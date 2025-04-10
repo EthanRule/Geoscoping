@@ -2,29 +2,32 @@
 {
     using System;
     using System.Net.Http;
-    using System.Net.Http.Json;
     using System.Text.Json;
     using System.Threading.Tasks;
-    using System.Collections.Generic;
 
     /// <summary>
     /// Primary class for fetching data from third party APIs and the Database.
     /// </summary>
     public class EventRepository
     {
-        private readonly HttpClient _httpClient;
+        private readonly HttpClient eventHttpClient;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EventRepository"/> class.
+        /// </summary>
+        /// <param name="httpClient">http client.</param>
+        /// <exception cref="ArgumentNullException">exception.</exception>
         public EventRepository(HttpClient httpClient)
         {
-            _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+            this.eventHttpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         }
 
         /// <summary>
-        /// Fetches recent earthquake data from USGS API
+        /// Fetches recent earthquake data from USGS API.
         /// </summary>
-        /// <param name="period">Time period for earthquakes (hour, day, week, month)</param>
-        /// <param name="minMagnitude">Minimum earthquake magnitude</param>
-        /// <returns>A JSON object containing earthquake data</returns>
+        /// <param name="period">Time period for earthquakes (hour, day, week, month).</param>
+        /// <param name="minMagnitude">Minimum earthquake magnitude.</param>
+        /// <returns>A JSON object containing earthquake data.</returns>
         public async Task<JsonDocument> GetEarthquakeDataAsync(string period = "day", double minMagnitude = 2.5)
         {
             // USGS Earthquake API endpoint
@@ -33,7 +36,7 @@
 
             try
             {
-                var response = await _httpClient.GetAsync(url);
+                var response = await this.eventHttpClient.GetAsync(url);
                 response.EnsureSuccessStatusCode();
 
                 var content = await response.Content.ReadAsStreamAsync();
@@ -47,15 +50,16 @@
         }
 
         /// <summary>
-        /// Prints earthquake data to console
+        /// Prints earthquake data to console.
         /// </summary>
-        /// <param name="period">Time period for earthquakes (hour, day, week, month)</param>
-        /// <param name="minMagnitude">Minimum earthquake magnitude</param>
+        /// <param name="period">Time period for earthquakes (hour, day, week, month).</param>
+        /// <param name="minMagnitude">Minimum earthquake magnitude.</param>
+        /// <returns>Task.</returns>
         public async Task PrintEarthquakeDataAsync(string period = "day", double minMagnitude = 2.5)
         {
             try
             {
-                var earthquakeData = await GetEarthquakeDataAsync(period, minMagnitude);
+                var earthquakeData = await this.GetEarthquakeDataAsync(period, minMagnitude);
 
                 Console.WriteLine($"USGS Earthquake Data ({minMagnitude}+ magnitude, past {period})");
                 Console.WriteLine("=====================================================");
