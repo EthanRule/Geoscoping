@@ -12,11 +12,11 @@ using Xunit.Abstractions;
 
 namespace GeoscopingEngineTests
 {
-    public class TestEventRepository
+    public class EventRepositoryTests
     {
         private readonly ITestOutputHelper _output;
 
-        public TestEventRepository(ITestOutputHelper output)
+        public EventRepositoryTests(ITestOutputHelper output)
         {
             _output = output;
         }

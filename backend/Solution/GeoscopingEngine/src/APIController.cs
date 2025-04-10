@@ -43,19 +43,26 @@
                 timestamp = DateTime.UtcNow,
             };
 
-            // Create a new HttpResponse instance with appropriate properties
-            var httpResponse = new DefaultHttpContext().Response;
-            httpResponse.StatusCode = statusCode;
-            httpResponse.ContentType = "application/json";
+            // Create a new HttpResponse instance with proper setup for testing
+            var context = new DefaultHttpContext();
+            context.Response.StatusCode = statusCode;
+            context.Response.ContentType = "application/json";
 
-            using (var writer = new StreamWriter(httpResponse.Body))
+            // Create a memory stream that we can both write to and read from
+            context.Response.Body = new MemoryStream();
+
+            // Serialize directly to the response body
+            var jsonResponse = System.Text.Json.JsonSerializer.Serialize(response);
+            using (var writer = new StreamWriter(context.Response.Body, leaveOpen: true))
             {
-                var jsonResponse = System.Text.Json.JsonSerializer.Serialize(response);
                 writer.Write(jsonResponse);
                 writer.Flush();
             }
 
-            return httpResponse;
+            // Reset position to beginning so it can be read in tests
+            context.Response.Body.Position = 0;
+
+            return context.Response;
         }
 
         /// <summary>
@@ -109,12 +116,12 @@
             string method = request.Method.ToUpper();
             string path = request.Path.ToString().ToLower();
 
-            if (path == "/api/events" && method == "GET")
+            if (path == "/api/events/earthquakes" && method == "GET")
             {
                 // Extract query parameters
                 var queryParams = request.Query;
 
-                // return await eventController.GetEvents(queryParams);
+                return await this.eventController.GetEarthquakeData();
             }
             else if (path.Contains("/api/events/") && method == "GET")
             {

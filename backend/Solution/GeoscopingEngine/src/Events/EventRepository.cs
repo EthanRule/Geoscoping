@@ -10,7 +10,7 @@
     /// </summary>
     public class EventRepository
     {
-        private readonly HttpClient httpClient;
+        private readonly HttpClient eventHttpClient;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventRepository"/> class.
@@ -19,7 +19,7 @@
         /// <exception cref="ArgumentNullException">exception.</exception>
         public EventRepository(HttpClient httpClient)
         {
-            httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+            this.eventHttpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         }
 
         /// <summary>
@@ -36,7 +36,7 @@
 
             try
             {
-                var response = await this.httpClient.GetAsync(url);
+                var response = await this.eventHttpClient.GetAsync(url);
                 response.EnsureSuccessStatusCode();
 
                 var content = await response.Content.ReadAsStreamAsync();
