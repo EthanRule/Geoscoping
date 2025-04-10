@@ -1,7 +1,7 @@
 ﻿namespace GeoscopingEngine.Src
 {
-    using GeoscopingEngine.src;
-    using GeoscopingEngine.src.Events;
+    using GeoscopingEngine.Src;
+    using GeoscopingEngine.Src.Events;
 
     /// <summary>
     /// APIController serves as a bridge between the API and the underlying geoscoping engine.
@@ -43,10 +43,19 @@
                 timestamp = DateTime.UtcNow,
             };
 
-            // placeholder
-            HttpResponse httpsResponse = null;
+            // Create a new HttpResponse instance with appropriate properties
+            var httpResponse = new DefaultHttpContext().Response;
+            httpResponse.StatusCode = statusCode;
+            httpResponse.ContentType = "application/json";
 
-            return httpsResponse;
+            using (var writer = new StreamWriter(httpResponse.Body))
+            {
+                var jsonResponse = System.Text.Json.JsonSerializer.Serialize(response);
+                writer.Write(jsonResponse);
+                writer.Flush();
+            }
+
+            return httpResponse;
         }
 
         /// <summary>
