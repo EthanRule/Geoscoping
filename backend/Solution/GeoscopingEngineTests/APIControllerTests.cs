@@ -14,6 +14,9 @@
     {
         private readonly APIController apiController;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="APIControllerTests"/> class.
+        /// </summary>
         public APIControllerTests()
         {
             // Create concrete dependencies
@@ -32,6 +35,7 @@
         /// <summary>
         /// Tests that HandleRequest correctly routes to EventController and returns a response.
         /// </summary>
+        /// <returns>Task.</returns>
         [Fact]
         public async Task HandleRequest_ReturnsEarthquakeData()
         {
@@ -60,6 +64,7 @@
         /// <summary>
         /// Tests that RouteToService correctly routes to the EventController for earthquake data.
         /// </summary>
+        /// <returns>Task.</returns>
         [Fact]
         public async Task RouteToService_RoutesToEventController()
         {

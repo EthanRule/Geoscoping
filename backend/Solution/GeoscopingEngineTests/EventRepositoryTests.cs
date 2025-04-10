@@ -1,24 +1,29 @@
-﻿using GeoscopingEngine.Src.Events;
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
-using Xunit;
-using Xunit.Abstractions;
-
-namespace GeoscopingEngineTests
+﻿namespace GeoscopingEngineTests
 {
+    using System;
+    using System.Net;
+    using System.Net.Http;
+    using System.Text;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using GeoscopingEngine.Src.Events;
+    using Xunit;
+    using Xunit.Abstractions;
+
+    /// <summary>
+    /// Event Repository tests.
+    /// </summary>
     public class EventRepositoryTests
     {
-        private readonly ITestOutputHelper _output;
+        private readonly ITestOutputHelper testOutput;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EventRepositoryTests"/> class.
+        /// </summary>
+        /// <param name="output">output.</param>
         public EventRepositoryTests(ITestOutputHelper output)
         {
-            _output = output;
+            this.testOutput = output;
         }
 
         [Fact]
@@ -87,8 +92,8 @@ namespace GeoscopingEngineTests
             Assert.Equal(1, featuresCount);
 
             // Print some data from the response
-            _output.WriteLine("Earthquake Test Data:");
-            _output.WriteLine("============================");
+            this.testOutput.WriteLine("Earthquake Test Data:");
+            this.testOutput.WriteLine("============================");
 
             var features = result.RootElement.GetProperty("features");
             for (int i = 0; i < featuresCount; i++)
@@ -99,13 +104,17 @@ namespace GeoscopingEngineTests
                 long time = properties.GetProperty("time").GetInt64();
                 var dateTime = DateTimeOffset.FromUnixTimeMilliseconds(time).LocalDateTime;
 
-                _output.WriteLine($"{i + 1}. Magnitude {magnitude} earthquake at {place}");
-                _output.WriteLine($"   Time: {dateTime}");
-                _output.WriteLine($"   Coordinates: {string.Join(", ", features[i].GetProperty("geometry").GetProperty("coordinates").EnumerateArray().Select(x => x.GetDouble()))}");
-                _output.WriteLine("");
+                this.testOutput.WriteLine($"{i + 1}. Magnitude {magnitude} earthquake at {place}");
+                this.testOutput.WriteLine($"   Time: {dateTime}");
+                this.testOutput.WriteLine($"   Coordinates: {string.Join(", ", features[i].GetProperty("geometry").GetProperty("coordinates").EnumerateArray().Select(x => x.GetDouble()))}");
+                this.testOutput.WriteLine(string.Empty);
             }
         }
 
+        /// <summary>
+        /// Tests the GetEarthquakeDataAsync method with live data.
+        /// </summary>
+        /// <returns>Result.</returns>
         [Fact]
         public async Task GetEarthquakeDataAsync_WithLiveData_ReturnsResults()
         {
@@ -121,12 +130,12 @@ namespace GeoscopingEngineTests
             Assert.True(result.RootElement.TryGetProperty("features", out var features));
 
             // Print earthquake data
-            _output.WriteLine("Live Earthquake Data (Magnitude 4.5+, Past Day):");
-            _output.WriteLine("===============================================");
+            this.testOutput.WriteLine("Live Earthquake Data (Magnitude 4.5+, Past Day):");
+            this.testOutput.WriteLine("===============================================");
 
             int count = features.GetArrayLength();
-            _output.WriteLine($"Found {count} earthquakes");
-            _output.WriteLine("");
+            this.testOutput.WriteLine($"Found {count} earthquakes");
+            this.testOutput.WriteLine(string.Empty);
 
             for (int i = 0; i < Math.Min(count, 5); i++)
             {
@@ -136,24 +145,28 @@ namespace GeoscopingEngineTests
                 if (properties.TryGetProperty("mag", out var magElement))
                 {
                     double magnitude = magElement.GetDouble();
-                    _output.WriteLine($"{i + 1}. Magnitude {magnitude} at {place}");
+                    this.testOutput.WriteLine($"{i + 1}. Magnitude {magnitude} at {place}");
                 }
                 else
                 {
-                    _output.WriteLine($"{i + 1}. Unknown magnitude at {place}");
+                    this.testOutput.WriteLine($"{i + 1}. Unknown magnitude at {place}");
                 }
 
                 if (properties.TryGetProperty("time", out var timeElement))
                 {
                     long timestamp = timeElement.GetInt64();
                     var time = DateTimeOffset.FromUnixTimeMilliseconds(timestamp).LocalDateTime;
-                    _output.WriteLine($"   Time: {time}");
+                    this.testOutput.WriteLine($"   Time: {time}");
                 }
 
-                _output.WriteLine("");
+                this.testOutput.WriteLine(string.Empty);
             }
         }
 
+        /// <summary>
+        /// Tests the PrintEarthquakeDataAsync method.
+        /// </summary>
+        /// <returns>result.</returns>
         [Fact]
         public async Task PrintEarthquakeDataAsync_PrintsToConsole()
         {
@@ -217,31 +230,47 @@ namespace GeoscopingEngineTests
             // Assert
             // No specific assertions - this test is to verify that the method
             // runs without exceptions and prints data
-            _output.WriteLine("Test completed - PrintEarthquakeDataAsync executed successfully");
+            this.testOutput.WriteLine("Test completed - PrintEarthquakeDataAsync executed successfully");
         }
     }
 
-    // Custom TestHttpMessageHandler to replace Moq
+    /// <summary>
+    /// Custom TestHttpMessageHandler to replace Moq.
+    /// </summary>
     public class TestHttpMessageHandler : HttpMessageHandler
     {
-        private readonly string _response;
-        private readonly HttpStatusCode _statusCode;
+        private readonly string httpResponse;
+        private readonly HttpStatusCode httpStatusCode;
 
+        /// <summary>
+        /// http message handler.
+        /// </summary>
+        /// <param name="response">response.</param>
+        /// <param name="statusCode">status code.</param>
         public TestHttpMessageHandler(string response, HttpStatusCode statusCode = HttpStatusCode.OK)
         {
-            _response = response;
-            _statusCode = statusCode;
+            this.httpResponse = response;
+            this.httpStatusCode = statusCode;
         }
 
+        /// <summary>
+        /// Gets or sets the number of calls.
+        /// </summary>
         public int NumberOfCalls { get; private set; }
 
+        /// <summary>
+        /// Sends the HTTP request.
+        /// </summary>
+        /// <param name="request">request.</param>
+        /// <param name="cancellationToken">canceltoken.</param>
+        /// <returns>http message.</returns>
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            NumberOfCalls++;
+            this.NumberOfCalls++;
             return Task.FromResult(new HttpResponseMessage
             {
-                StatusCode = _statusCode,
-                Content = new StringContent(_response, Encoding.UTF8, "application/json")
+                StatusCode = this.httpStatusCode,
+                Content = new StringContent(this.httpResponse, Encoding.UTF8, "application/json"),
             });
         }
     }
