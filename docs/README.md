@@ -8,4 +8,5 @@ This directory holds all forms of documentation used in the creation and mainten
 **4. process-model.md**  
 **5. ci-cd.md**  
 **6. style-guide.md**  
-**7. ai.md**
+**7. ai.md**  
+**8. /github-copilot**
