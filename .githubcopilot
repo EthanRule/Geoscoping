@@ -1,0 +1,44 @@
+# GitHub Copilot Configuration
+# This file helps Copilot understand our project conventions and preferences
+
+# Code Style
+style:
+  indentation: 2
+  quotes: single
+  semicolons: true
+  trailingComma: es5
+
+# Naming Conventions
+naming:
+  files:
+    tsx: PascalCase # e.g., UserProfile.tsx
+    ts: camelCase # e.g., authService.ts
+    scss: kebab-case # e.g., button-styles.scss
+  directories: kebab-case # e.g., user-profiles
+  components: PascalCase # e.g., NavigationButton
+  hooks: camelCase # e.g., useAuthentication
+  variables: camelCase # e.g., userProfile
+
+# Design System
+design:
+  colors:
+    primary:
+      black: "#050505"
+      marianBlue: "#1C448E"
+      white: "#FEFFFE"
+      mossGreen: "#9EA677"
+      sepia: "#693A12"
+  approach: mobile-first
+
+# Repository Structure
+structure:
+  components: src/components
+  hooks: src/hooks
+  utils: src/utils
+  services: src/services
+  pages: src/pages
+
+# Documentation Preferences
+documentation:
+  includeExamples: true
+  useHeadings: true
