@@ -1,6 +1,5 @@
 ﻿namespace GeoscopingEngine.Src
 {
-    using GeoscopingEngine.Src;
     using GeoscopingEngine.Src.Events;
 
     /// <summary>
@@ -27,6 +26,23 @@
         }
 
         /// <summary>
+        /// Handles the incoming HTTP request and processes it through the geoscoping engine.
+        /// </summary>
+        /// <param name="request">Request sent by client.</param>
+        /// <returns>A formatted HTTP response.</returns>
+        public async Task<HttpResponse> HandleRequest(HttpRequest request)
+        {
+            this.logger.LogInformation($"Received request: {request.Path}");
+            if (request == null)
+            {
+                return this.FormatResponse(null, "Invalid request", 400);
+            }
+
+            var result = await this.RouteToService(request);
+            return this.FormatResponse(result, "Success", 200);
+        }
+
+        /// <summary>
         /// Formats the API response for consistency.
         /// </summary>
         /// <param name="data">The response data.</param>
@@ -43,15 +59,11 @@
                 timestamp = DateTime.UtcNow,
             };
 
-            // Create a new HttpResponse instance with proper setup for testing
             var context = new DefaultHttpContext();
             context.Response.StatusCode = statusCode;
             context.Response.ContentType = "application/json";
-
-            // Create a memory stream that we can both write to and read from
             context.Response.Body = new MemoryStream();
 
-            // Serialize directly to the response body
             var jsonResponse = System.Text.Json.JsonSerializer.Serialize(response);
             using (var writer = new StreamWriter(context.Response.Body, leaveOpen: true))
             {
@@ -59,32 +71,9 @@
                 writer.Flush();
             }
 
-            // Reset position to beginning so it can be read in tests
-            context.Response.Body.Position = 0;
+            context.Response.Body.Position = 0; // Set to zero for tests
 
             return context.Response;
-        }
-
-        /// <summary>
-        /// Handles the incoming HTTP request and processes it through the geoscoping engine.
-        /// </summary>
-        /// <param name="request">Request sent by client.</param>
-        /// <returns>A formatted HTTP response.</returns>
-        public async Task<HttpResponse> HandleRequest(HttpRequest request)
-        {
-            this.logger.LogInformation($"Received request: {request.Path}");
-
-            // Validate request
-            if (request == null)
-            {
-                return this.FormatResponse(null, "Invalid request", 400);
-            }
-
-            // Route request to appropriate service
-            var result = await this.RouteToService(request);
-
-            // Format and return successful response
-            return this.FormatResponse(result, "Success", 200);
         }
 
         /// <summary>
@@ -110,27 +99,25 @@
         /// </summary>
         /// <param name="request">Https request.</param>
         /// <returns>Object.</returns>
-        /// <exception cref="NotSupportedException">Exception handling.</exception>
+        /// <exception cref="NotSupportedException">Returns exception if no API is hit.</exception>
         private async Task<object> RouteToEventController(HttpRequest request)
         {
             string method = request.Method.ToUpper();
             string path = request.Path.ToString().ToLower();
 
-            if (path == "/api/events/earthquakes" && method == "GET")
+            if (method != "GET")
             {
-                // Extract query parameters
-                var queryParams = request.Query;
-
-                return await this.eventController.GetEarthquakeData();
+                throw new NotSupportedException($"Not a GET request: {method}");
             }
-            else if (path.Contains("/api/events/") && method == "GET")
+
+            switch (path)
             {
-                // Extract event ID from path
-                string idStr = path.Split("/").Last();
-                if (int.TryParse(idStr, out int id))
-                {
-                    // return await eventController.GetEventDetails(id);
-                }
+                case "/api/events/earthquakes":
+                    return await this.eventController.GetEarthquakeData();
+                case "/api/events/volcanos":
+                    return await this.eventController.GetVolcanoData();
+                case "/api/events/wildfires":
+                    return await this.eventController.GetWildfireData();
             }
 
             throw new NotSupportedException($"Unsupported event endpoint: {path}");
