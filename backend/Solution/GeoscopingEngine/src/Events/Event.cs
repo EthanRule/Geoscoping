@@ -133,9 +133,5 @@ namespace GeoscopingEngine.Src.Events
                 this.Severity,
                 this.Description);
         }
-
-        // public Regions GetAssociatedRegions()
-
-        // public Sources GetAssociatedSources()
     }
 }

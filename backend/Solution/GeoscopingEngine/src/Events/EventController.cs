@@ -26,5 +26,23 @@
         {
             return await this.eventService.GetEarthquakeDataAsync();
         }
+
+        /// <summary>
+        /// Gets volcano data asynchronously.
+        /// </summary>
+        /// <returns>Json of events from the eventservice.</returns>
+        public async Task<JsonDocument> GetVolcanoData()
+        {
+            return await this.eventService.GetVolcanoDataAsync();
+        }
+
+        /// <summary>
+        /// Gets wildfire data asynchronously.
+        /// </summary>
+        /// <returns>Json of events from the eventservice.</returns>
+        public async Task<JsonDocument> GetWildfireData()
+        {
+            return await this.eventService.GetWildfireDataAsync();
+        }
     }
 }

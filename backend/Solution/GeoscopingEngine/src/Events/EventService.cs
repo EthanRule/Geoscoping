@@ -30,5 +30,25 @@
         {
             return await this.eventRepository.GetEarthquakeDataAsync(period, minMagnitude);
         }
+
+        /// <summary>
+        /// Gets volcano data asynchronously.
+        /// </summary>
+        /// <param name="period">Time period for volcanos.</param>
+        /// <returns>JSON document with volcano data.</returns>
+        public async Task<JsonDocument> GetVolcanoDataAsync(string period = "day")
+        {
+            return await this.eventRepository.GetVolcanoDataAsync(period);
+        }
+
+        /// <summary>
+        /// Gets wildfire data asynchronously.
+        /// </summary>
+        /// <param name="period">Time period for wildfire.</param>
+        /// <returns>JSON document with wildfire data.</returns>
+        public async Task<JsonDocument> GetWildfireDataAsync(string period = "day")
+        {
+            return await this.eventRepository.GetWildfireDataAsync(period);
+        }
     }
 }

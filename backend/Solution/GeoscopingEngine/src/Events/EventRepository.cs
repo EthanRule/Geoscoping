@@ -49,6 +49,56 @@
             }
         }
 
+
+
+        /// <summary>
+        /// Fetches recent volcano data from USGS API.
+        /// </summary>
+        /// <param name="period">Time period for volcanoes (hour, day, week, month).</param>
+        /// <returns>A JSON object containing volcano data.</returns>
+        public async Task<JsonDocument> GetVolcanoDataAsync(string period = "day")
+        {
+            string url = $"https://volcanoes.usgs.gov/vhp/feeds/volcanoes.geojson";
+
+            try
+            {
+                var response = await this.eventHttpClient.GetAsync(url);
+                response.EnsureSuccessStatusCode();
+
+                var content = await response.Content.ReadAsStreamAsync();
+                return await JsonDocument.ParseAsync(content);
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Error fetching volcano data: {ex.Message}");
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Fetches recent wildfire data from USGS API.
+        /// </summary>
+        /// <param name="period">Time period for wildfires (hour, day, week, month).</param>
+        /// <returns>A JSON object containing wildfire data.</returns>
+        public async Task<JsonDocument> GetWildfireDataAsync(string period = "day")
+        {
+            string url = $"https://wildfire.cr.usgs.gov/arcgis/rest/services/geomac_dyn/MapServer/1/query?where=1%3D1&outFields=*&f=geojson";
+
+            try
+            {
+                var response = await this.eventHttpClient.GetAsync(url);
+                response.EnsureSuccessStatusCode();
+
+                var content = await response.Content.ReadAsStreamAsync();
+                return await JsonDocument.ParseAsync(content);
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Error fetching wildfire data: {ex.Message}");
+                throw;
+            }
+        }
+
         /// <summary>
         /// Prints earthquake data to console.
         /// </summary>

@@ -232,6 +232,138 @@
             // runs without exceptions and prints data
             this.testOutput.WriteLine("Test completed - PrintEarthquakeDataAsync executed successfully");
         }
+
+        [Fact]
+        public async Task GetWildfireDataAsync_ReturnsValidData()
+        {
+            // Arrange
+            string sampleResponse = @"{
+                ""type"": ""FeatureCollection"",
+                ""metadata"": {
+                    ""generated"": 1684956956000,
+                    ""url"": ""https://wildfire.usgs.gov/wildfires/feed/v1.0/summary/2.5_day.geojson"",
+                    ""title"": ""USGS Wildfires, Past Day"",
+                    ""status"": 200,
+                    ""api"": ""1.10.3"",
+                    ""count"": 1
+                },
+                ""features"": [
+                    {
+                        ""type"": ""Feature"",
+                        ""properties"": {
+                            ""name"": ""Wildfire near Los Angeles"",
+                            ""size"": 1200,
+                            ""time"": 1684956000000,
+                            ""updated"": 1684956200000,
+                            ""status"": ""active"",
+                            ""type"": ""wildfire""
+                        },
+                        ""geometry"": {
+                            ""type"": ""Point"",
+                            ""coordinates"": [-118.4, 34.2]
+                        },
+                        ""id"": ""wf12345""
+                    }
+                ]
+            }";
+
+            var httpClient = new HttpClient(new TestHttpMessageHandler(sampleResponse));
+            var eventRepository = new EventRepository(httpClient);
+
+            // Act
+            var result = await eventRepository.GetWildfireDataAsync();
+
+            // Assert
+            Assert.NotNull(result);
+            var featuresCount = result.RootElement.GetProperty("features").GetArrayLength();
+            Assert.Equal(1, featuresCount);
+
+            // Print some data from the response
+            this.testOutput.WriteLine("Wildfire Test Data:");
+            this.testOutput.WriteLine("============================");
+
+            var features = result.RootElement.GetProperty("features");
+            for (int i = 0; i < featuresCount; i++)
+            {
+                var properties = features[i].GetProperty("properties");
+                string name = properties.GetProperty("name").GetString();
+                double size = properties.GetProperty("size").GetDouble();
+                long time = properties.GetProperty("time").GetInt64();
+                var dateTime = DateTimeOffset.FromUnixTimeMilliseconds(time).LocalDateTime;
+
+                this.testOutput.WriteLine($"{i + 1}. Wildfire: {name}");
+                this.testOutput.WriteLine($"   Size: {size} acres");
+                this.testOutput.WriteLine($"   Time: {dateTime}");
+                this.testOutput.WriteLine($"   Coordinates: {string.Join(", ", features[i].GetProperty("geometry").GetProperty("coordinates").EnumerateArray().Select(x => x.GetDouble()))}");
+                this.testOutput.WriteLine(string.Empty);
+            }
+        }
+
+        [Fact]
+        public async Task GetVolcanoDataAsync_ReturnsValidData()
+        {
+            // Arrange
+            string sampleResponse = @"{
+                ""type"": ""FeatureCollection"",
+                ""metadata"": {
+                    ""generated"": 1684956956000,
+                    ""url"": ""https://volcanoes.usgs.gov/vhp/feeds/volcanoes.geojson"",
+                    ""title"": ""USGS Volcanoes, Past Day"",
+                    ""status"": 200,
+                    ""api"": ""1.10.3"",
+                    ""count"": 1
+                },
+                ""features"": [
+                    {
+                        ""type"": ""Feature"",
+                        ""properties"": {
+                            ""name"": ""Mount St. Helens"",
+                            ""elevation"": 2549,
+                            ""time"": 1684956000000,
+                            ""updated"": 1684956200000,
+                            ""status"": ""active"",
+                            ""type"": ""volcano""
+                        },
+                        ""geometry"": {
+                            ""type"": ""Point"",
+                            ""coordinates"": [-122.18, 46.2]
+                        },
+                        ""id"": ""vol12345""
+                    }
+                ]
+            }";
+
+            var httpClient = new HttpClient(new TestHttpMessageHandler(sampleResponse));
+            var eventRepository = new EventRepository(httpClient);
+
+            // Act
+            var result = await eventRepository.GetVolcanoDataAsync();
+
+            // Assert
+            Assert.NotNull(result);
+            var featuresCount = result.RootElement.GetProperty("features").GetArrayLength();
+            Assert.Equal(1, featuresCount);
+
+            // Print some data from the response
+            this.testOutput.WriteLine("Volcano Test Data:");
+            this.testOutput.WriteLine("============================");
+
+            var features = result.RootElement.GetProperty("features");
+            for (int i = 0; i < featuresCount; i++)
+            {
+                var properties = features[i].GetProperty("properties");
+                string name = properties.GetProperty("name").GetString();
+                double elevation = properties.GetProperty("elevation").GetDouble();
+                long time = properties.GetProperty("time").GetInt64();
+                var dateTime = DateTimeOffset.FromUnixTimeMilliseconds(time).LocalDateTime;
+
+                this.testOutput.WriteLine($"{i + 1}. Volcano: {name}");
+                this.testOutput.WriteLine($"   Elevation: {elevation} meters");
+                this.testOutput.WriteLine($"   Time: {dateTime}");
+                this.testOutput.WriteLine($"   Coordinates: {string.Join(", ", features[i].GetProperty("geometry").GetProperty("coordinates").EnumerateArray().Select(x => x.GetDouble()))}");
+                this.testOutput.WriteLine(string.Empty);
+            }
+        }
     }
 
     /// <summary>
@@ -242,11 +374,6 @@
         private readonly string httpResponse;
         private readonly HttpStatusCode httpStatusCode;
 
-        /// <summary>
-        /// http message handler.
-        /// </summary>
-        /// <param name="response">response.</param>
-        /// <param name="statusCode">status code.</param>
         public TestHttpMessageHandler(string response, HttpStatusCode statusCode = HttpStatusCode.OK)
         {
             this.httpResponse = response;
