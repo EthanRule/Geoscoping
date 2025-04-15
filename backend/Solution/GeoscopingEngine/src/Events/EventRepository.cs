@@ -49,8 +49,6 @@
             }
         }
 
-
-
         /// <summary>
         /// Fetches recent volcano data from USGS API.
         /// </summary>

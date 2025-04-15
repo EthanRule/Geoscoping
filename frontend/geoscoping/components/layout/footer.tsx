@@ -34,7 +34,7 @@ export default function Footer() {
       {/* Back to top button */}
       <button
         onClick={scrollToTop}
-        className="absolute -top-5 right-8 bg-[#1C448E] hover:bg-[#9EA677] text-white rounded-full p-2 transform transition-all duration-300 hover:scale-110 shadow-lg"
+        className="absolute -top-5 right-8 bg-gray-800/70 hover:bg-[#9EA677] text-white rounded-full p-2 transform transition-all duration-300 hover:scale-110 shadow-lg"
         aria-label="Back to top"
       >
         <svg

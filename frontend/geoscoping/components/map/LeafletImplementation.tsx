@@ -14,7 +14,7 @@ export default function LeafletImplementation() {
   const [useSatellite, setUseSatellite] = useState(false);
 
   return (
-    <div className="border-2 border-[#1C448E] rounded-lg overflow-hidden">
+    <div className="border-2 border-gray-800/50 rounded-lg overflow-hidden">
       <div className="absolute top-2 right-2 z-20">
         <button
           onClick={() => setUseSatellite(!useSatellite)}
